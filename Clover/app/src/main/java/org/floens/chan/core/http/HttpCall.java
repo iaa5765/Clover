@@ -53,6 +53,8 @@ public abstract class HttpCall implements Callback {
 
     @Override
     public void onResponse(Call call, Response response) {
+        System.out.println(response.body() + " code: " + Integer.toString(response.code()));
+        System.out.println("Response suc");
         try {
             if (response.isSuccessful() && response.body() != null) {
                 String responseString = response.body().string();
@@ -77,6 +79,7 @@ public abstract class HttpCall implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
+        System.out.println("Response fail");
         AndroidUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {

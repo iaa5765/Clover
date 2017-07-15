@@ -73,19 +73,11 @@ public class ReplyHttpCall extends HttpCall {
         formBuilder.addFormDataPart("email", reply.options);
 
         if (!thread && !TextUtils.isEmpty(reply.subject)) {
-            formBuilder.addFormDataPart("sub", reply.subject);
+            formBuilder.addFormDataPart("subject", reply.subject);
         }
 
-        formBuilder.addFormDataPart("com", reply.comment);
+        formBuilder.addFormDataPart("body", reply.comment);
 
-        if (reply.captchaResponse != null) {
-            if (reply.captchaChallenge != null) {
-                formBuilder.addFormDataPart("recaptcha_challenge_field", reply.captchaChallenge);
-                formBuilder.addFormDataPart("recaptcha_response_field", reply.captchaResponse);
-            } else {
-                formBuilder.addFormDataPart("g-recaptcha-response", reply.captchaResponse);
-            }
-        }
 
         if (reply.file != null) {
             formBuilder.addFormDataPart("upfile", reply.fileName, RequestBody.create(
@@ -98,11 +90,10 @@ public class ReplyHttpCall extends HttpCall {
         }
 
         requestBuilder.url(ChanUrls.getReplyUrl(reply.board));
+        System.out.println("attempting " + reply.board + " POST " + reply.comment);
         requestBuilder.post(formBuilder.build());
 
-        if (reply.usePass) {
-            requestBuilder.addHeader("Cookie", "pass_id=" + reply.passId);
-        }
+
     }
 
     @Override

@@ -628,7 +628,7 @@ public class ThreadPresenter implements ChanLoader.ChanLoaderCallback, PostAdapt
         String text = "";
 
         if (post.hasImage) {
-            text += "Filename: " + post.filename + "." + post.ext + " \nDimensions: " + post.imageWidth + "x"
+            text += "Filename: " + post.file + "." + post.ext + " \nDimensions: " + post.imageWidth + "x"
                     + post.imageHeight + "\nSize: " + AndroidUtils.getReadableFileSize(post.fileSize, false);
 
             if (post.spoiler) {

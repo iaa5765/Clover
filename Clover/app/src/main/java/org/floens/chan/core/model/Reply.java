@@ -26,13 +26,13 @@ public class Reply {
     /**
      * Optional. Null when ReCaptcha v2 was used or a 4pass
      */
-    public String captchaChallenge;
+    //public String captchaChallenge;
 
     /**
      * Optional. Null when a 4pass was used.
      */
-    public String captchaResponse;
-    public boolean usePass = false;
+    //public String captchaResponse;
+    //public boolean usePass = false;
     public String board;
     public int resto;
 

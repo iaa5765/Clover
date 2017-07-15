@@ -168,11 +168,13 @@ public class BoardManager implements Response.Listener<List<Board>>, Response.Er
 
     private List<Board> getDefaultBoards() {
         List<Board> list = new ArrayList<>();
-        list.add(new Board("Technology", "g", true, true));
-        list.add(new Board("Food & Cooking", "ck", true, true));
-        list.add(new Board("Do It Yourself", "diy", true, true));
-        list.add(new Board("Animals & Nature", "an", true, true));
-
+        list.add(new Board("Oatmeal", "oat", true, true));
+        list.add(new Board("Show Discussion", "pony", true, true));
+        list.add(new Board("Chat", "chat", true, true));
+        list.add(new Board("Roleplay", "rp", true, true));
+        list.add(new Board("Fanworks", "fan", true, true));
+        list.add(new Board("Site Issues", "site", true, true));
+        list.add(new Board("Twilight's Library", "arch", true, true));
         Collections.shuffle(list);
 
         return list;

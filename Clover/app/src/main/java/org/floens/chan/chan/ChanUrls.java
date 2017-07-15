@@ -20,18 +20,21 @@ package org.floens.chan.chan;
 import org.floens.chan.core.settings.ChanSettings;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class ChanUrls {
     public static String getCatalogUrl(String board) {
-        return scheme() + "://a.4cdn.org/" + board + "/catalog.json";
+        return scheme() + "://ponychan.net/api.php?req=catalog&board=" + board;
+        //return scheme() + "://a.4cdn.org/qst/catalog.json";
     }
 
     public static String getPageUrl(String board, int pageNumber) {
-        return scheme() + "://a.4cdn.org/" + board + "/" + (pageNumber + 1) + ".json";
+        return scheme() + "://ponychan.net/api.php?req=threads&board=" + board + "&page=" + (pageNumber + 1);
     }
 
     public static String getThreadUrl(String board, int no) {
-        return scheme() + "://a.4cdn.org/" + board + "/thread/" + no + ".json";
+        //return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=2";
+        return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=" + no;
     }
 
     public static String getCaptchaSiteKey() {
@@ -39,19 +42,28 @@ public class ChanUrls {
     }
 
     public static String getImageUrl(String board, String code, String extension) {
-        return scheme() + "://i.4cdn.org/" + board + "/" + code + "." + extension;
+        return scheme() + "://ponychan.net/" + board + "/src/" + code + "." + extension;
+
+        //return scheme() + "://ponychan.net/" + board + "/src/" + code + ".jpg";
+
     }
 
-    public static String getThumbnailUrl(String board, String code) {
-        return scheme() + "://t.4cdn.org/" + board + "/" + code + "s.jpg";
+    public static String getThumbnailUrl(String board, String code, String ext) {
+        if (Objects.equals(ext, "webm")) {
+            return scheme() + "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
+        } else if (Objects.equals(code, "1420222744903")) {
+            return scheme() + "://ml.ponychan.net/" + board + "/thumb/" + code + "." + ext;
+        } else
+        return scheme() + "://ponychan.net/" + board + "/thumb/" + code + "." + ext;
+
     }
 
     public static String getSpoilerUrl() {
-        return scheme() + "://s.4cdn.org/image/spoiler.png";
+        return scheme() + "://www.ponychan.net/static/spoiler.png";
     }
 
     public static String getCustomSpoilerUrl(String board, int value) {
-        return scheme() + "://s.4cdn.org/image/spoiler-" + board + value + ".png";
+        return scheme() + "://www.ponychan.net/static/spoiler.png";
     }
 
     public static String getCountryFlagUrl(String countryCode) {
@@ -63,31 +75,31 @@ public class ChanUrls {
     }
 
     public static String getBoardsUrl() {
-        return scheme() + "://a.4cdn.org/boards.json";
+        return scheme() + "://ponychan.net/api.php?req=boards";
     }
 
     public static String getReplyUrl(String board) {
-        return "https://sys.4chan.org/" + board + "/post";
+        return scheme() + "://ponychan.net/post.php";
     }
 
     public static String getDeleteUrl(String board) {
-        return "https://sys.4chan.org/" + board + "/imgboard.php";
+        return "https://ponychan.net/post.php";
     }
 
     public static String getBoardUrlDesktop(String board) {
-        return scheme() + "://boards.4chan.org/" + board + "/";
+        return scheme() + "://ponychan.net/" + board + "/";
     }
 
     public static String getThreadUrlDesktop(String board, int no) {
-        return scheme() + "://boards.4chan.org/" + board + "/thread/" + no;
+        return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html";
     }
 
     public static String getThreadUrlDesktop(String board, int no, int postNo) {
-        return scheme() + "://boards.4chan.org/" + board + "/thread/" + no + "#p" + postNo;
+        return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html#" + postNo;
     }
 
     public static String getCatalogUrlDesktop(String board) {
-        return scheme() + "://boards.4chan.org/" + board + "/catalog";
+        return scheme() + "://ponychan.net/" + board + "/catalog.html";
     }
 
     public static String getPassUrl() {

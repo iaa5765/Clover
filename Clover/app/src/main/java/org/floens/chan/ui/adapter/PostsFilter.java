@@ -112,7 +112,7 @@ public class PostsFilter {
                     add = true;
                 } else if (item.name.toLowerCase(Locale.ENGLISH).contains(lowerQuery)) {
                     add = true;
-                } else if (item.filename != null && item.filename.toLowerCase(Locale.ENGLISH).contains(lowerQuery)) {
+                } else if (item.file != null && item.file.toLowerCase(Locale.ENGLISH).contains(lowerQuery)) {
                     add = true;
                 }
                 if (!add) {

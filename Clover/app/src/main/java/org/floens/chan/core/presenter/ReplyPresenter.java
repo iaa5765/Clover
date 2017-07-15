@@ -185,27 +185,13 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
         callback.loadViewsIntoDraft(draft);
         draft.board = loadable.board;
         draft.resto = loadable.isThreadMode() ? loadable.no : -1;
-
-        if (ChanSettings.passLoggedIn()) {
-            draft.usePass = true;
-            draft.passId = ChanSettings.passId.get();
-        } else {
-            draft.usePass = false;
-            draft.passId = null;
-        }
-
         draft.spoilerImage = draft.spoilerImage && board.spoilers;
-
-        draft.captchaResponse = null;
-        if (draft.usePass) {
-            makeSubmitCall();
-        } else {
-            switchPage(Page.CAPTCHA, true);
-        }
+        makeSubmitCall();
     }
 
     @Override
     public void onHttpSuccess(ReplyHttpCall replyCall) {
+        System.out.println("httpsuc");
         if (replyCall.posted) {
             if (ChanSettings.postPinThread.get() && loadable.isThreadMode()) {
                 ChanThread thread = callback.getThread();
@@ -242,6 +228,7 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
 
     @Override
     public void onHttpFail(ReplyHttpCall httpPost) {
+        System.out.println("Httpfail");
         switchPage(Page.INPUT, true);
         callback.openMessage(true, false, getString(R.string.reply_error), true);
     }
@@ -252,8 +239,6 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
 
     @Override
     public void captchaEntered(CaptchaLayoutInterface captchaLayout, String challenge, String response) {
-        draft.captchaChallenge = challenge;
-        draft.captchaResponse = response;
         captchaLayout.reset();
         makeSubmitCall();
     }

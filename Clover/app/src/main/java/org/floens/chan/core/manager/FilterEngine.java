@@ -123,7 +123,7 @@ public class FilterEngine {
             return true;
         }
 
-        if ((filter.type & FilterType.FILENAME.flag) != 0 && matches(filter, FilterType.FILENAME.isRegex, post.filename, false)) {
+        if ((filter.type & FilterType.FILENAME.flag) != 0 && matches(filter, FilterType.FILENAME.isRegex, post.file, false)) {
             return true;
         }
 

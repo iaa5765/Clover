@@ -353,7 +353,7 @@ public class ChanReaderRequest extends JsonReaderRequest<ChanReaderRequest.ChanR
                     post.rawComment = reader.nextString();
                     break;
                 case "tim":
-                    post.tim = reader.nextLong();
+                    post.tim = Long.parseLong(reader.nextString());
                     break;
                 case "time":
                     post.time = reader.nextLong();
@@ -379,8 +379,16 @@ public class ChanReaderRequest extends JsonReaderRequest<ChanReaderRequest.ChanR
                 case "replies":
                     post.replies = reader.nextInt();
                     break;
-                case "filename":
-                    post.filename = reader.nextString();
+                case "file":
+                    String tim = reader.nextString();
+                    if (tim.length() == 16) {
+                        post.tim = Long.parseLong(tim.substring(0, tim.length() - 4));
+                    } else if (tim.length() == 17) {
+                        post.tim = Long.parseLong(tim.substring(0, tim.length() - 4));
+                    } else if (tim.length() == 18) {
+                        post.tim = Long.parseLong(tim.substring(0, tim.length() - 5));
+                    }
+                    post.file = tim;
                     break;
                 case "sticky":
                     post.sticky = reader.nextInt() == 1;
