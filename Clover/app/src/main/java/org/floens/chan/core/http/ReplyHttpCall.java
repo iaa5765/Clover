@@ -62,13 +62,6 @@ public class ReplyHttpCall extends HttpCall {
         MultipartBody.Builder formBuilder = new MultipartBody.Builder();
         formBuilder.setType(MultipartBody.FORM);
 
-        formBuilder.addFormDataPart("mode", "regist");
-        formBuilder.addFormDataPart("pwd", password);
-
-        if (thread) {
-            formBuilder.addFormDataPart("resto", String.valueOf(reply.resto));
-        }
-
         formBuilder.addFormDataPart("name", reply.name);
         formBuilder.addFormDataPart("email", reply.options);
 
@@ -77,17 +70,28 @@ public class ReplyHttpCall extends HttpCall {
         }
 
         formBuilder.addFormDataPart("body", reply.comment);
-
-
         if (reply.file != null) {
-            formBuilder.addFormDataPart("upfile", reply.fileName, RequestBody.create(
+            formBuilder.addFormDataPart("file", reply.fileName, RequestBody.create(
                     MediaType.parse("application/octet-stream"), reply.file
             ));
         }
+        formBuilder.addFormDataPart("password", password);
+        formBuilder.addFormDataPart("thread", Integer.toString(threadNo));
+        formBuilder.addFormDataPart("board", reply.board);
+        formBuilder.addFormDataPart("making_a_post", "1");
+        formBuilder.addFormDataPart("post", "New Reply");
+        formBuilder.addFormDataPart("wantjson", "1");
+
+         /*if (thread) {
+            formBuilder.addFormDataPart("resto", String.valueOf(reply.resto));
+        }
+
+
+
 
         if (reply.spoilerImage) {
             formBuilder.addFormDataPart("spoiler", "on");
-        }
+        }*/
 
         requestBuilder.url(ChanUrls.getReplyUrl(reply.board));
         System.out.println("attempting " + reply.board + " POST " + reply.comment);

@@ -53,7 +53,11 @@ public abstract class HttpCall implements Callback {
 
     @Override
     public void onResponse(Call call, Response response) {
-        System.out.println(response.body() + " code: " + Integer.toString(response.code()));
+        try {
+            System.out.println(response.body().string() + " code: " + Integer.toString(response.code()) + " response " + response.toString() + " message " + response.message());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Response suc");
         try {
             if (response.isSuccessful() && response.body() != null) {
