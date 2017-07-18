@@ -17,6 +17,7 @@
  */
 package org.floens.chan.core.http;
 
+import org.floens.chan.core.model.Reply;
 import org.floens.chan.utils.AndroidUtils;
 import org.floens.chan.utils.IOUtils;
 import org.floens.chan.utils.Logger;
@@ -38,7 +39,7 @@ public abstract class HttpCall implements Callback {
         this.successful = successful;
     }
 
-    public abstract void setup(Request.Builder requestBuilder);
+    public abstract Reply setup(Request.Builder requestBuilder);
 
     public abstract void process(Response response, String result) throws IOException;
 
@@ -58,9 +59,8 @@ public abstract class HttpCall implements Callback {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Response suc");
         try {
-            if (response.isSuccessful() && response.body() != null) {
+            if (response.body() != null) {
                 String responseString = response.body().string();
                 process(response, responseString);
                 successful = true;
@@ -83,7 +83,6 @@ public abstract class HttpCall implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
-        System.out.println("Response fail");
         AndroidUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -102,6 +102,7 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
         callback.loadDraftIntoViews(draft);
         callback.updateCommentCount(0, board.maxCommentChars, false);
         callback.setCommentHint(getString(loadable.isThreadMode() ? R.string.reply_comment_thread : R.string.reply_comment_board));
+        callback.openNameOptions(true);
 
         if (draft.file != null) {
             showPreview(draft.fileName, draft.file);
@@ -139,9 +140,6 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
             return true;
         } else if (page == Page.CAPTCHA) {
             switchPage(Page.INPUT, true);
-            return true;
-        } else if (moreOpen) {
-            onMoreClicked();
             return true;
         }
         return false;
@@ -191,7 +189,6 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
 
     @Override
     public void onHttpSuccess(ReplyHttpCall replyCall) {
-        System.out.println("httpsuc");
         if (replyCall.posted) {
             if (ChanSettings.postPinThread.get() && loadable.isThreadMode()) {
                 ChanThread thread = callback.getThread();
@@ -213,22 +210,21 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
             callback.loadDraftIntoViews(draft);
             callback.onPosted();
 
-            if (bound && !loadable.isThreadMode()) {
-                callback.showThread(databaseManager.getDatabaseLoadableManager().get(Loadable.forThread(loadable.board, replyCall.postNo)));
-            }
-        } else {
+            //if (bound && !loadable.isThreadMode()) {
+            //callback.showThread(databaseManager.getDatabaseLoadableManager().get(Loadable.forThread(loadable.board, replyCall.postNo)));
+            //}
+        }/* else {
             if (replyCall.errorMessage == null) {
                 replyCall.errorMessage = getString(R.string.reply_error);
             }
 
             switchPage(Page.INPUT, true);
             callback.openMessage(true, false, replyCall.errorMessage, true);
-        }
-    }
+        }*/
+   }
 
     @Override
     public void onHttpFail(ReplyHttpCall httpPost) {
-        System.out.println("Httpfail");
         switchPage(Page.INPUT, true);
         callback.openMessage(true, false, getString(R.string.reply_error), true);
     }

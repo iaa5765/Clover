@@ -73,21 +73,21 @@ android {
         // the flavor name is appended to the name in the settings.
         "default" {
             applicationId "org.floens.chan"
-            resValue "string", "app_name", "Clover"
+            resValue "string", "app_name", "Flutter"
             resValue "string", "app_flavor_name", ""
             buildConfigField "String", "UPDATE_API_ENDPOINT", "\"https://floens.github.io/Clover/api/update\""
         }
 
         dev {
             applicationId "org.floens.chan.dev"
-            resValue "string", "app_name", "Clover dev"
+            resValue "string", "app_name", "Flutter dev"
             resValue "string", "app_flavor_name", ""
             buildConfigField "String", "UPDATE_API_ENDPOINT", "\"\""
         }
 
         fdroid {
             applicationId "org.floens.chan"
-            resValue "string", "app_name", "Clover"
+            resValue "string", "app_name", "Flutter"
             resValue "string", "app_flavor_name", "F-Droid"
             buildConfigField "String", "UPDATE_API_ENDPOINT", "\"https://floens.github.io/Clover/api/update\""
         }

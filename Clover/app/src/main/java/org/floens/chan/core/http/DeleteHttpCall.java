@@ -18,6 +18,7 @@
 package org.floens.chan.core.http;
 
 import org.floens.chan.chan.ChanUrls;
+import org.floens.chan.core.model.Reply;
 import org.floens.chan.core.model.SavedReply;
 import org.jsoup.Jsoup;
 
@@ -44,7 +45,7 @@ public class DeleteHttpCall extends HttpCall {
     }
 
     @Override
-    public void setup(Request.Builder requestBuilder) {
+    public Reply setup(Request.Builder requestBuilder) {
         FormBody.Builder formBuilder = new FormBody.Builder();
         formBuilder.add(Integer.toString(reply.no), "delete");
         if (onlyImageDelete) {
@@ -55,6 +56,7 @@ public class DeleteHttpCall extends HttpCall {
 
         requestBuilder.url(ChanUrls.getDeleteUrl(reply.board));
         requestBuilder.post(formBuilder.build());
+        return null;
     }
 
     @Override

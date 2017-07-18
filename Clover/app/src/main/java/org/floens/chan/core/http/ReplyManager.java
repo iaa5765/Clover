@@ -85,9 +85,12 @@ public class ReplyManager {
 
         Request.Builder requestBuilder = new Request.Builder();
 
-        httpCall.setup(requestBuilder);
+        Reply reply = httpCall.setup(requestBuilder);
 
         requestBuilder.header("User-Agent", userAgent);
+        requestBuilder.header("Referer", "https://www.ponychan.net/" + reply.board + "/res/" + reply.resto + "+50.html");
+        requestBuilder.header("Cookie", "userid=15e4a2c4059d87b2925d75cb6ace9fdd");
+
         Request request = requestBuilder.build();
 
         client.newCall(request).enqueue(httpCall);

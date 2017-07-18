@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
     <!-- Defined in gradle flavor -->
-    <!--<string name="app_name">Clover</string>-->
+    <!--<string name="app_name">Flutter</string>-->
 
     <string name="changelog_20300">
         <![CDATA[

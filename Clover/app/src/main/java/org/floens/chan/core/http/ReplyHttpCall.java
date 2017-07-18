@@ -19,11 +19,13 @@ package org.floens.chan.core.http;
 
 import android.text.TextUtils;
 
+import org.apache.http.HttpRequestInterceptor;
 import org.floens.chan.chan.ChanUrls;
 import org.floens.chan.core.model.Reply;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +35,7 @@ import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.Interceptor;
 
 public class ReplyHttpCall extends HttpCall {
     private static final String TAG = "ReplyHttpCall";
@@ -54,7 +57,7 @@ public class ReplyHttpCall extends HttpCall {
     }
 
     @Override
-    public void setup(Request.Builder requestBuilder) {
+    public Reply setup(Request.Builder requestBuilder) {
         boolean thread = reply.resto >= 0;
 
         password = Long.toHexString(RANDOM.nextLong());
@@ -67,7 +70,8 @@ public class ReplyHttpCall extends HttpCall {
 
         if (!thread && !TextUtils.isEmpty(reply.subject)) {
             formBuilder.addFormDataPart("subject", reply.subject);
-        }
+        } else
+            formBuilder.addFormDataPart("subject", "");
 
         formBuilder.addFormDataPart("body", reply.comment);
         if (reply.file != null) {
@@ -76,26 +80,26 @@ public class ReplyHttpCall extends HttpCall {
             ));
         }
         formBuilder.addFormDataPart("password", password);
-        formBuilder.addFormDataPart("thread", Integer.toString(threadNo));
+        if (thread) {
+            formBuilder.addFormDataPart("thread", String.valueOf(reply.resto));
+        }
         formBuilder.addFormDataPart("board", reply.board);
         formBuilder.addFormDataPart("making_a_post", "1");
         formBuilder.addFormDataPart("post", "New Reply");
         formBuilder.addFormDataPart("wantjson", "1");
 
-         /*if (thread) {
-            formBuilder.addFormDataPart("resto", String.valueOf(reply.resto));
-        }
-
-
-
+         if (thread) {
+             formBuilder.addFormDataPart("resto", String.valueOf(reply.resto));
+         }
 
         if (reply.spoilerImage) {
             formBuilder.addFormDataPart("spoiler", "on");
-        }*/
+        }
 
         requestBuilder.url(ChanUrls.getReplyUrl(reply.board));
-        System.out.println("attempting " + reply.board + " POST " + reply.comment);
         requestBuilder.post(formBuilder.build());
+        this.posted = true;
+        return reply;
 
 
     }
