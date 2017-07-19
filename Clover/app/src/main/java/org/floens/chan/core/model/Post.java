@@ -147,12 +147,24 @@ public class Post {
     public final List<Integer> repliesFrom = new ArrayList<>();
 
     /**
+     * Parse and modify raw comment for formatting
+     *
+     * @return formatted comment
+     */
+    public String parseRawComment(String raw) {
+        raw = raw.replaceAll("\\r", "</span><br>");
+        //raw = raw.replaceAll(">>\\d+", "<a href=\"#pPOSTNUMBER\" class=\"quotelink\">&gt;&gt;POSTNUMBER</a>");
+        raw = raw.replaceAll("\\n>|^>", "<span class=\"quote\">&gt;");
+        return raw;
+    }
+
+    /**
      * Finish up the data: parse the comment, check if the data is valid etc.
      *
      * @return false if this data is invalid
      */
     public boolean finish() {
-        rawComment = rawComment.replaceAll("\\r\\n", "\n");
+        rawComment = parseRawComment(rawComment);
         comment = rawComment;
 
         if (board == null || no < 0 || resto < 0 || date == null || time < 0) {
@@ -167,7 +179,13 @@ public class Post {
 
         if (file != null && imageWidth > 0 && imageHeight > 0)  {
             hasImage = true;
-            imageUrl = ChanUrls.getImageUrl(board, file, "");
+            if (file.contains("mtr")) {
+                tim = Long.parseLong(file.substring(4,17));
+                imageUrl = ChanUrls.getImageUrl(board, "mtr_" + Long.toString(tim), ext);
+            } else {
+                tim = Long.parseLong(file.substring(0,13));
+                imageUrl = ChanUrls.getImageUrl(board, Long.toString(tim), ext);
+            }
             file = Parser.unescapeEntities(file, false);
 
             boolean spoilerImage = spoiler && !ChanSettings.revealImageSpoilers.get();
@@ -179,10 +197,12 @@ public class Post {
                     thumbnailUrl = ChanUrls.getSpoilerUrl();
                 }
             } else {
-                thumbnailUrl = ChanUrls.getThumbnailUrl(board, Long.toString(tim), ext);
+                if (file.contains("mtr")) {
+                    thumbnailUrl = ChanUrls.getThumbnailUrl(board, "mtr_" + Long.toString(tim), ext);
+                } else thumbnailUrl = ChanUrls.getThumbnailUrl(board, Long.toString(tim), ext);
             }
 
-            image = new PostImage(String.valueOf(tim), thumbnailUrl, imageUrl, file, ext, imageWidth, imageHeight, spoilerImage, fileSize);
+            image = new PostImage(String.valueOf(tim), thumbnailUrl, imageUrl, Long.toString(tim), ext, imageWidth, imageHeight, spoilerImage, fileSize);
         }
 
         if (!TextUtils.isEmpty(countryName)) {

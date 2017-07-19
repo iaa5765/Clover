@@ -104,6 +104,7 @@ android {
 
         debug {
             versionNameSuffix getCommitHash()
+            debuggable true
 //            minifyEnabled true
 //            proguardFiles 'proguard.cfg'
         }

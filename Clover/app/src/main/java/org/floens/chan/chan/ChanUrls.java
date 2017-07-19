@@ -24,17 +24,17 @@ import java.util.Objects;
 
 public class ChanUrls {
     public static String getCatalogUrl(String board) {
-        return /*scheme() + */"https://ponychan.net/api.php?req=catalog&board=" + board;
+        return scheme() + "://ponychan.net/api.php?req=catalog&board=" + board;
         //return scheme() + "://a.4cdn.org/qst/catalog.json";
     }
 
     public static String getPageUrl(String board, int pageNumber) {
-        return /*scheme() + */"https://ponychan.net/api.php?req=threads&board=" + board + "&page=" + (pageNumber + 1);
+        return scheme() + "://ponychan.net/api.php?req=threads&board=" + board + "&page=" + (pageNumber + 1);
     }
 
     public static String getThreadUrl(String board, int no) {
         //return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=2";
-        return /*scheme() + */"https://ponychan.net/api.php?req=thread&board=" + board + "&thread=" + no;
+        return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=" + no;
     }
 
     public static String getCaptchaSiteKey() {
