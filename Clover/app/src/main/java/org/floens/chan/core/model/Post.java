@@ -33,6 +33,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Contains all data needed to represent a single post.<br>
@@ -151,12 +153,81 @@ public class Post {
      *
      * @return formatted comment
      */
-    public String parseRawComment(String raw) {
-        raw = raw.replaceAll("\\r", "</span><br>");
-        //raw = raw.replaceAll(">>\\d+", "<a href=\"#pPOSTNUMBER\" class=\"quotelink\">&gt;&gt;POSTNUMBER</a>");
-        raw = raw.replaceAll("\\n>|^>", "<span class=\"quote\">&gt;");
+    public String parseRawComment(String raw)     {
+        //fix linebreaks first
+        raw = raw.replaceAll("\\r\\n", "<br>\n");
+
+        System.out.println(raw);
+
+        //fix greentext
+        {
+            Pattern regex = Pattern.compile("(^(&gt;)((?!(&gt;))\\D).*)", Pattern.MULTILINE);
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<span class=\"quote\">&gt;" + regexMatcher.group(1).toString().substring(4) + "</span><br>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+
+            if (!matchesFound)
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //fix orangetext
+        {
+            Pattern regex = Pattern.compile("(^(&lt;).*)", Pattern.MULTILINE);
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<span class=\"orangequote\" style=\"color: #E07000\">&lt;" + regexMatcher.group(1).toString().substring(4) + "</span><br>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+
+            if (!matchesFound)
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //fix post links
+        {
+            Pattern regex = Pattern.compile("(&gt;&gt;\\d+)");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<a href=\"#p" + regexMatcher.group(1).toString().substring(8) + "\" class=\"quotelink\">&gt;&gt;" + regexMatcher.group(1).toString().substring(8) + "</a>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+
+            if (!matchesFound)
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
         return raw;
     }
+
 
     /**
      * Finish up the data: parse the comment, check if the data is valid etc.
@@ -164,6 +235,8 @@ public class Post {
      * @return false if this data is invalid
      */
     public boolean finish() {
+        rawComment = TextUtils.htmlEncode(rawComment);
+        System.out.print(rawComment);
         rawComment = parseRawComment(rawComment);
         comment = rawComment;
 

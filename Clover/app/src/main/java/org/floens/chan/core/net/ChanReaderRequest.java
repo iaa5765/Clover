@@ -269,10 +269,12 @@ public class ChanReaderRequest extends JsonReaderRequest<ChanReaderRequest.ChanR
                 List<Integer> value = entry.getValue();
 
                 Post subject = postsByNo.get(key);
-                synchronized (subject.repliesFrom) {
-                    subject.repliesFrom.clear();
-                    subject.repliesFrom.addAll(value);
-                }
+                try {
+                    synchronized (subject.repliesFrom) {
+                        subject.repliesFrom.clear();
+                        subject.repliesFrom.addAll(value);
+                    }
+                } catch (NullPointerException e) {}
             }
 
             if (LOG_TIMING) {
