@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.floens.chan"
+    package="org.floens.flutter"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".ChanApplication"
+        android:name="org.floens.flutter.ChanApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:value="598.0dip" />
 
         <activity
-            android:name=".ui.activity.BoardActivity"
+            android:name="org.floens.flutter.ui.activity.BoardActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
 
@@ -77,15 +77,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
 
         <service
-            android:name=".ui.service.WatchNotifier"
+            android:name="org.floens.flutter.ui.service.WatchNotifier"
             android:exported="false" />
 
         <service
-            android:name=".ui.service.SavingNotification"
+            android:name="org.floens.flutter.ui.service.SavingNotification"
             android:exported="false" />
 
         <receiver
-            android:name=".core.receiver.WatchUpdateReceiver"
+            android:name="org.floens.flutter.core.receiver.WatchUpdateReceiver"
             android:exported="false">
 
             <intent-filter>
