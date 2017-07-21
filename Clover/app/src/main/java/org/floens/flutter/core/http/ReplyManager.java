@@ -18,17 +18,22 @@
 package org.floens.flutter.core.http;
 
 import android.content.Context;
+import android.telecom.Call;
 
 import org.floens.flutter.core.model.Loadable;
 import org.floens.flutter.core.model.Reply;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Callback;
 
 /**
  * To send an reply to 4chan.
@@ -38,13 +43,15 @@ public class ReplyManager {
 
     private final Context context;
     private String userAgent;
+    private String userID;
     private OkHttpClient client;
 
     private Map<Loadable, Reply> drafts = new HashMap<>();
 
-    public ReplyManager(Context context, String userAgent) {
+    public ReplyManager(Context context, String userAgent, String userID) {
         this.context = context;
         this.userAgent = userAgent;
+        this.userID = userID;
 
         client = new OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
@@ -89,7 +96,7 @@ public class ReplyManager {
 
         requestBuilder.header("User-Agent", userAgent);
         requestBuilder.header("Referer", "https://www.ponychan.net/" + reply.board + "/res/" + reply.resto + "+50.html");
-        requestBuilder.header("Cookie", "userid=15e4a2c4059d87b2925d75cb6ace9fdd");
+        requestBuilder.header("Cookie", "userid=" + userID);
 
         Request request = requestBuilder.build();
 

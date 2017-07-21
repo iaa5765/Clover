@@ -39,7 +39,10 @@ import org.floens.flutter.utils.Logger;
 import org.floens.flutter.utils.Time;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
+import java.util.Random;
+
 
 import de.greenrobot.event.EventBus;
 
@@ -62,6 +65,7 @@ public class Chan extends Application {
     private static FileCache fileCache;
 
     private String userAgent;
+    private String userID;
     private int activityForegroundCounter = 0;
 
     public Chan() {
@@ -113,7 +117,8 @@ public class Chan extends Application {
 
         File cacheDir = getExternalCacheDir() != null ? getExternalCacheDir() : getCacheDir();
 
-        replyManager = new ReplyManager(this, userAgent);
+        userID = fetchUserID();
+        replyManager = new ReplyManager(this, userAgent, userID);
 
         volleyRequestQueue = Volley.newRequestQueue(this, userAgent, new ProxiedHurlStack(userAgent), new File(cacheDir, Volley.DEFAULT_CACHE_DIR), VOLLEY_CACHE_SIZE);
 
@@ -190,6 +195,22 @@ public class Chan extends Application {
         public ForegroundChangedMessage(boolean inForeground) {
             this.inForeground = inForeground;
         }
+    }
+
+    private String fetchUserID() {
+        String hexDigits = "0123456789abcdef";
+        String temp = "";
+
+        Random gen = new Random();
+
+        for (int i = 0; i < 32; i++)
+        {
+            int rand = gen.nextInt(hexDigits.length());
+            temp += hexDigits.substring(rand, rand+1);
+        }
+
+        System.out.println("UID : " + temp);
+        return temp;
     }
 
     private String createUserAgent() {
