@@ -198,7 +198,7 @@ public class ViewThreadController extends ThreadController implements ThreadLayo
             case SHARE_ID:
             case OPEN_BROWSER_ID:
                 Loadable loadable = threadLayout.getPresenter().getLoadable();
-                String link = ChanUrls.getThreadUrlDesktop(loadable.board, loadable.no);
+                String link = ChanUrls.getThreadUrlDesktop(loadable.board, loadable.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan);
 
                 if (id == SHARE_ID) {
                     AndroidUtils.shareLink(link);

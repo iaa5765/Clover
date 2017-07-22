@@ -72,7 +72,7 @@ public class BoardManager implements Response.Listener<List<Board>>, Response.Er
             update(false);
         }
 
-        Chan.getVolleyRequestQueue().add(new BoardsRequest(ChanUrls.getBoardsUrl(), this, this));
+        //Chan.getVolleyRequestQueue().add(new BoardsRequest(ChanUrls.getBoardsUrl(), this, this));
     }
 
     @Override
@@ -168,14 +168,17 @@ public class BoardManager implements Response.Listener<List<Board>>, Response.Er
 
     private List<Board> getDefaultBoards() {
         List<Board> list = new ArrayList<>();
-        list.add(new Board("Oatmeal", "oat", true, true));
-        list.add(new Board("Show Discussion", "pony", true, true));
-        list.add(new Board("Chat", "chat", true, true));
-        list.add(new Board("Roleplay", "rp", true, true));
-        list.add(new Board("Fanworks", "fan", true, true));
-        list.add(new Board("Site Issues", "site", true, true));
-        list.add(new Board("Twilight's Library", "arch", true, true));
-        Collections.shuffle(list);
+        list.add(new Board("Oatmeal", "oat", true, true, "ponychan"));
+        list.add(new Board("Show Discussion", "pony", true, true, "ponychan"));
+        list.add(new Board("Chat", "chat", true, true, "ponychan"));
+        list.add(new Board("Roleplay", "rp", true, true, "ponychan"));
+        list.add(new Board("Fanworks", "fan", true, true, "ponychan"));
+        list.add(new Board("Site Issues", "site", true, true, "ponychan"));
+        list.add(new Board("Twilight's Library", "arch", true, true, "ponychan"));
+        list.add(new Board("Ponyville", "pony", true, true, "ponyville"));
+        list.add(new Board("Ponyville Roleplay", "rp", true, true, "ponyville"));
+        list.add(new Board("Canterlot", "canterlot", true, true, "ponyville"));
+        list.add(new Board("Ponyville Municipal Archives", "arch", true, true, "ponyville"));
 
         return list;
     }

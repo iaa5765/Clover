@@ -494,15 +494,15 @@ public class ThreadPresenter implements ChanLoader.ChanLoaderCallback, PostAdapt
             case POST_OPTION_OPEN_BROWSER:
                 AndroidUtils.openLink(
                         post.isOP ?
-                                ChanUrls.getThreadUrlDesktop(post.board, post.no) :
-                                ChanUrls.getThreadUrlDesktop(post.board, loadable.no, post.no)
+                                ChanUrls.getThreadUrlDesktop(post.board, post.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan) :
+                                ChanUrls.getThreadUrlDesktop(post.board, loadable.no, post.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan)
                 );
                 break;
             case POST_OPTION_SHARE:
                 AndroidUtils.shareLink(
                         post.isOP ?
-                                ChanUrls.getThreadUrlDesktop(post.board, post.no) :
-                                ChanUrls.getThreadUrlDesktop(post.board, loadable.no, post.no)
+                                ChanUrls.getThreadUrlDesktop(post.board, post.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan) :
+                                ChanUrls.getThreadUrlDesktop(post.board, loadable.no, post.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan)
                 );
                 break;
             case POST_OPTION_HIDE:

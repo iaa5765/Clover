@@ -23,38 +23,49 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class ChanUrls {
-    public static String getCatalogUrl(String board) {
-        return scheme() + "://ponychan.net/api.php?req=catalog&board=" + board;
-        //return scheme() + "://a.4cdn.org/qst/catalog.json";
+    public static String getCatalogUrl(String board, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/api.php?req=catalog&board=" + board;
+        else
+            return scheme() + "://ponyville.us/" + board + "/catalog.json";
     }
 
-    public static String getPageUrl(String board, int pageNumber) {
-        return scheme() + "://ponychan.net/api.php?req=threads&board=" + board + "&page=" + (pageNumber + 1);
+    public static String getPageUrl(String board, int pageNumber, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/api.php?req=threads&board=" + board + "&page=" + (pageNumber + 1);
+        else
+            return scheme() + "://ponyville.us/" + board + "/" + (pageNumber + 1) + ".json";
     }
 
-    public static String getThreadUrl(String board, int no) {
-        //return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=2";
-        return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=" + no;
+    public static String getThreadUrl(String board, int no, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=" + no;
+        else
+            return scheme() + "://ponyville.us/" + board + "/res/" + no + ".json";
     }
 
     public static String getCaptchaSiteKey() {
         return "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc";
     }
 
-    public static String getImageUrl(String board, String code, String extension) {
-        return scheme() + "://ponychan.net/" + board + "/src/" + code + "." + extension;
-
-        //return scheme() + "://ponychan.net/" + board + "/src/" + code + ".jpg";
+    public static String getImageUrl(String board, String code, String extension, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/" + board + "/src/" + code + "." + extension;
+        else
+            return scheme() + "://ponyville.us/" + board + "/src/" + code + "." + extension;
 
     }
 
-    public static String getThumbnailUrl(String board, String code, String ext) {
+    public static String getThumbnailUrl(String board, String code, String ext, String chan) {
         if (Objects.equals(ext, "webm")) {
-            return scheme() + "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
+            return "";//scheme() + "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
         } else if (Objects.equals(code, "1420222744903")) {
             return scheme() + "://ml.ponychan.net/" + board + "/thumb/" + code + "." + ext;
         } else
-        return scheme() + "://ponychan.net/" + board + "/thumb/" + code + "." + ext;
+            if (chan.equals("ponychan"))
+                return scheme() + "://ponychan.net/" + board + "/thumb/" + code + "." + ext;
+            else
+                return scheme() + "://ponyville.us/" + board + "/thumb/" + code + ".png";
 
     }
 
@@ -75,31 +86,54 @@ public class ChanUrls {
     }
 
     public static String getBoardsUrl() {
-        return scheme() + "://ponychan.net/api.php?req=boards";
+        //if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/api.php?req=boards";
+        //else
+          //  return scheme() + "://ponyville.us/boards.json";
+
     }
 
     public static String getReplyUrl(String board) {
-        return scheme() + "://www.ponychan.net/post.php";
+        if (board.equals("ponychan"))
+            return scheme() + "://www.ponychan.net/post.php";
+        else
+            return scheme() + "://ponyville.us/post.php";
     }
 
     public static String getDeleteUrl(String board) {
-        return scheme() + "://www.ponychan.net/post.php";
+        if (board.equals("ponychan"))
+            return scheme() + "://www.ponychan.net/post.php";
+        else
+            return scheme() + "://ponyville.us/post.php";
     }
 
-    public static String getBoardUrlDesktop(String board) {
-        return scheme() + "://ponychan.net/" + board + "/";
+    public static String getBoardUrlDesktop(String board, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/" + board + "/";
+        else
+            return scheme() + "://ponyville.us/" + board + "/index.html";
     }
 
-    public static String getThreadUrlDesktop(String board, int no) {
-        return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html";
+    public static String getThreadUrlDesktop(String board, int no, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html";
+        else
+            return scheme() + "://ponyville.us/" + board + "/res/" + no + ".html";
     }
 
-    public static String getThreadUrlDesktop(String board, int no, int postNo) {
-        return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html#" + postNo;
+    public static String getThreadUrlDesktop(String board, int no, int postNo, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html#" + postNo;
+        else
+            return scheme() + "://ponyville.us/" + board + "/res/" + no + ".html#" + postNo;
+
     }
 
-    public static String getCatalogUrlDesktop(String board) {
-        return scheme() + "://ponychan.net/" + board + "/catalog.html";
+    public static String getCatalogUrlDesktop(String board, String chan) {
+        if (chan.equals("ponychan"))
+            return scheme() + "://ponychan.net/" + board + "/catalog.html";
+        else
+            return scheme() + "://ponyville.us/" + board + "/catalog.html";
     }
 
     public static String getPassUrl() {
@@ -121,4 +155,5 @@ public class ChanUrls {
     private static String scheme() {
         return ChanSettings.networkHttps.get() ? "https" : "http";
     }
+
 }

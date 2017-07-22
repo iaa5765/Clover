@@ -24,15 +24,20 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class Board {
+
     public Board() {
     }
 
-    public Board(String name, String code, boolean saved, boolean workSafe) {
+    public Board(String name, String code, boolean saved, boolean workSafe, String chan) {
         this.name = name;
         this.code = code;
         this.saved = saved;
         this.workSafe = workSafe;
+        this.chan = chan;
     }
+
+    @DatabaseField(columnName = "chan")
+    public String chan;
 
     @DatabaseField(generatedId = true)
     public int id;

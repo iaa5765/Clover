@@ -75,9 +75,9 @@ public class ChanReaderRequest extends JsonReaderRequest<ChanReaderRequest.ChanR
         String url;
 
         if (loadable.isThreadMode()) {
-            url = ChanUrls.getThreadUrl(loadable.board, loadable.no);
+            url = ChanUrls.getThreadUrl(loadable.board, loadable.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan);
         } else if (loadable.isCatalogMode()) {
-            url = ChanUrls.getCatalogUrl(loadable.board);
+            url = ChanUrls.getCatalogUrl(loadable.board, Chan.getBoardManager().getBoardByCode(loadable.board).chan);
         } else {
             throw new IllegalArgumentException("Unknown mode");
         }

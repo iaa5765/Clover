@@ -135,7 +135,7 @@ public class BrowseController extends ThreadController implements ToolbarMenuIte
                 break;
             case SHARE_ID:
             case OPEN_BROWSER_ID:
-                String link = ChanUrls.getCatalogUrlDesktop(threadLayout.getPresenter().getLoadable().board);
+                String link = ChanUrls.getCatalogUrlDesktop(threadLayout.getPresenter().getLoadable().board, Chan.getBoardManager().getBoardByCode(threadLayout.getPresenter().getLoadable().board).chan);
 
                 if (id == SHARE_ID) {
                     AndroidUtils.shareLink(link);
