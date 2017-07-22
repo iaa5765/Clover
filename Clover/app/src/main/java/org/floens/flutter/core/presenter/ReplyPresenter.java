@@ -331,8 +331,8 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
                     if (!captchaInited) {
                         captchaInited = true;
                         String baseUrl = loadable.isThreadMode() ?
-                                ChanUrls.getThreadUrlDesktop(loadable.board, loadable.no) :
-                                ChanUrls.getBoardUrlDesktop(loadable.board);
+                                ChanUrls.getThreadUrlDesktop(loadable.board, loadable.no, Chan.getBoardManager().getBoardByCode(loadable.board).chan) :
+                                ChanUrls.getBoardUrlDesktop(loadable.board, Chan.getBoardManager().getBoardByCode(loadable.board).chan);
                         callback.initCaptcha(baseUrl, ChanUrls.getCaptchaSiteKey(), this);
                     }
                     break;

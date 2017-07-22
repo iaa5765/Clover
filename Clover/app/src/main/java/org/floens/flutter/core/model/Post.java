@@ -448,12 +448,16 @@ public class Post {
      * @return false if this data is invalid
      */
     public boolean finish() {
+        String chan = Chan.getBoardManager().getBoardByCode(board).chan;
+
         preRawComment = rawComment;
-        rawComment = TextUtils.htmlEncode(rawComment);
-        rawComment = parseRawComment(rawComment);
+        if (chan.equals("ponychan")) {
+            rawComment = TextUtils.htmlEncode(rawComment);
+            rawComment = parseRawComment(rawComment);
+        }
         comment = rawComment;
 
-        if (board == null || no < 0 || resto < 0 || date == null || time < 0) {
+        if (board == null || no < 0 || resto < 0 || /*date == null ||*/ time < 0) {
             return false;
         }
 
@@ -467,10 +471,10 @@ public class Post {
             hasImage = true;
             if (file.contains("mtr")) {
                 tim = Long.parseLong(file.substring(4,17));
-                imageUrl = ChanUrls.getImageUrl(board, "mtr_" + Long.toString(tim), ext);
+                imageUrl = ChanUrls.getImageUrl(board, "mtr_" + Long.toString(tim), ext, chan);
             } else {
                 tim = Long.parseLong(file.substring(0,13));
-                imageUrl = ChanUrls.getImageUrl(board, Long.toString(tim), ext);
+                imageUrl = ChanUrls.getImageUrl(board, Long.toString(tim), ext, chan);
             }
             file = Parser.unescapeEntities(file, false);
 
@@ -484,8 +488,8 @@ public class Post {
                 }
             } else {
                 if (file.contains("mtr")) {
-                    thumbnailUrl = ChanUrls.getThumbnailUrl(board, "mtr_" + Long.toString(tim), ext);
-                } else thumbnailUrl = ChanUrls.getThumbnailUrl(board, Long.toString(tim), ext);
+                    thumbnailUrl = ChanUrls.getThumbnailUrl(board, "mtr_" + Long.toString(tim), ext, chan);
+                } else thumbnailUrl = ChanUrls.getThumbnailUrl(board, Long.toString(tim), ext, chan);
             }
 
             image = new PostImage(String.valueOf(tim), thumbnailUrl, imageUrl, Long.toString(tim), ext, imageWidth, imageHeight, spoilerImage, fileSize);

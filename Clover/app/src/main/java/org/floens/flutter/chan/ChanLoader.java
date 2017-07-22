@@ -196,11 +196,11 @@ public class ChanLoader implements Response.ErrorListener, Response.Listener<Cha
     @Override
     public void onResponse(ChanReaderRequest.ChanReaderResponse response) {
         request = null;
-
+        /*
         if (response.posts.size() == 0) {
             onErrorResponse(new VolleyError("Post size is 0"));
             return;
-        }
+        }*/
 
         if (thread == null) {
             thread = new ChanThread(loadable, new ArrayList<Post>());

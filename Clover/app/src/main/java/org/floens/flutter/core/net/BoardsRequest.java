@@ -78,6 +78,7 @@ public class BoardsRequest extends JsonReaderRequest<List<Board>> {
         reader.beginObject();
 
         Board board = new Board();
+        board.chan = "ponychan";
 
         while (reader.hasNext()) {
             String key = reader.nextName();
