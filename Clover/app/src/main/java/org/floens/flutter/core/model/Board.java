@@ -69,28 +69,28 @@ public class Board {
     public int pages = 10;
 
     @DatabaseField
-    public int maxFileSize = -1;
+    public int maxFileSize = 5242880;
 
     @DatabaseField
-    public int maxWebmSize = -1;
+    public int maxWebmSize = 4194304;
 
     @DatabaseField
-    public int maxCommentChars = -1;
+    public int maxCommentChars = 8000;
 
     @DatabaseField
-    public int bumpLimit = -1;
+    public int bumpLimit = 250;
 
     @DatabaseField
-    public int imageLimit = -1;
+    public int imageLimit = 1000;
 
     @DatabaseField
-    public int cooldownThreads = 0;
+    public int cooldownThreads = 300;
 
     @DatabaseField
-    public int cooldownReplies = 0;
+    public int cooldownReplies = 10;
 
     @DatabaseField
-    public int cooldownImages = 0;
+    public int cooldownImages = 10;
 
     // unused, to be removed
     @DatabaseField
@@ -101,7 +101,7 @@ public class Board {
     public int cooldownImagesIntra = -1;
 
     @DatabaseField
-    public boolean spoilers = false;
+    public boolean spoilers = true;
 
     @DatabaseField
     public int customSpoilers = -1;

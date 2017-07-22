@@ -202,12 +202,12 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
 
             switchPage(Page.INPUT, false);
             closeAll();
-            /*highlightQuotes();
+            //highlightQuotes();
             String name = draft.name;
             draft = new Reply();
             draft.name = name;
             replyManager.putReply(loadable, draft);
-            callback.loadDraftIntoViews(draft);*/
+            //callback.loadDraftIntoViews(draft);
             callback.onPosted();
 
             //if (bound && !loadable.isThreadMode()) {

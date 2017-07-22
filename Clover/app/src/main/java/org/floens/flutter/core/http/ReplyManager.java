@@ -20,6 +20,7 @@ package org.floens.flutter.core.http;
 import android.content.Context;
 import android.telecom.Call;
 
+import org.floens.flutter.Chan;
 import org.floens.flutter.core.model.Loadable;
 import org.floens.flutter.core.model.Reply;
 
@@ -108,8 +109,17 @@ public class ReplyManager {
         Reply reply = httpCall.setup(requestBuilder);
 
         requestBuilder.header("User-Agent", userAgent);
-        requestBuilder.header("Referer", "https://www.ponychan.net/" + reply.board + "/res/" + reply.resto + "+50.html");
-        requestBuilder.header("Cookie", "userid=" + userID);
+        if (Chan.getBoardManager().getBoardByCode(reply.board).chan.equals("ponychan")) {
+            requestBuilder.header("Referer", "https://www.ponychan.net/" + reply.board + "/res/" + reply.resto + "+50.html");
+            requestBuilder.header("Cookie", "userid=" + userID);
+        } else {
+            if (reply.board.contains("1"))
+                requestBuilder.header("Referer", "https://ponyville.us/" + reply.board.substring(0, reply.board.length()-1) + "/res/" + reply.resto + "+50.html");
+            else {
+                requestBuilder.header("Referer", "https://ponyville.us/" + reply.board + "/res/" + reply.resto + ".html");
+                requestBuilder.header("__cfduid", "d87f7ecf593c5156cea33f9585a6e7e111488111754");
+            }
+        }
 
         Request request = requestBuilder.build();
 
