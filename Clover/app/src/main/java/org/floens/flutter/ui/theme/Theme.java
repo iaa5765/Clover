@@ -49,6 +49,7 @@ public class Theme {
     public int linkColor;
     public int spoilerColor;
     public int inlineQuoteColor;
+    public int orangeQuoteColor;
     public int subjectColor;
     public int nameColor;
     public int idBackgroundLight;
@@ -123,7 +124,8 @@ public class Theme {
                 R.attr.text_color_primary,
                 R.attr.text_color_secondary,
                 R.attr.text_color_hint,
-                R.attr.text_color_reveal_spoiler
+                R.attr.text_color_reveal_spoiler,
+                R.attr.post_orange_quote_value,
         });
 
         quoteColor = ta.getColor(0, 0);
@@ -144,6 +146,7 @@ public class Theme {
         textSecondary = ta.getColor(15, 0);
         textHint = ta.getColor(16, 0);
         textColorRevealSpoiler = ta.getColor(17, 0);
+        orangeQuoteColor = ta.getColor(18, 0);
 
         ta.recycle();
     }

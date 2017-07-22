@@ -271,6 +271,10 @@ public class ChanParser {
                         }
                     } else if (classes.contains("abbr")) {
                         return null;
+                    } else if (classes.contains("orangequote")) {
+                        quote = new SpannableString(span.text());
+                        quote.setSpan(new ForegroundColorSpanHashed(theme.orangeQuoteColor), 0, quote.length(), 0);
+                        detectLinks(theme, post, span.text(), quote);
                     } else {
                         quote = new SpannableString(span.text());
                         quote.setSpan(new ForegroundColorSpanHashed(theme.inlineQuoteColor), 0, quote.length(), 0);
