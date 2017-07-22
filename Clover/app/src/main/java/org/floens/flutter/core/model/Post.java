@@ -97,6 +97,8 @@ public class Post {
 
     public String rawComment;
 
+    private String preRawComment;
+
     public String countryUrl;
 
     public boolean spoiler = false;
@@ -155,7 +157,7 @@ public class Post {
      */
     public String parseRawComment(String raw)     {
         //fix linebreaks first
-        raw = raw.replaceAll("\\r\\n", "<br>\n");
+        raw = raw.replaceAll("(\\r)?\\n", "<br>\n");
 
         //System.out.println(raw);
 
@@ -222,6 +224,27 @@ public class Post {
             raw = temp.toString();
         }
 
+        //url-bbcode
+        {
+            Pattern regex = Pattern.compile("\\[url=(?:&quot;)?(.+?)(?:&quot;)?\\](.+?)\\[/url\\]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<a href=\"" + regexMatcher.group(1).toString() + "\">" + regexMatcher.group(2).toString() + "</a>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
         //spoilers
         {
             Pattern regex = Pattern.compile("\\[\\?](.+?)\\[/\\?]");
@@ -257,6 +280,7 @@ public class Post {
      * @return false if this data is invalid
      */
     public boolean finish() {
+        preRawComment = rawComment;
         rawComment = TextUtils.htmlEncode(rawComment);
         rawComment = parseRawComment(rawComment);
         comment = rawComment;

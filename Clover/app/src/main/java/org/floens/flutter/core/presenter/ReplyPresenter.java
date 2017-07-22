@@ -197,17 +197,17 @@ public class ReplyPresenter implements ReplyManager.HttpCallback<ReplyHttpCall>,
                 }
             }
 
-            SavedReply savedReply = new SavedReply(loadable.board, replyCall.postNo, replyCall.password);
-            databaseManager.runTask(databaseManager.getDatabaseSavedReplyManager().saveReply(savedReply));
+            /*SavedReply savedReply = new SavedReply(loadable.board, replyCall.postNo, replyCall.password);
+            databaseManager.runTask(databaseManager.getDatabaseSavedReplyManager().saveReply(savedReply));*/
 
             switchPage(Page.INPUT, false);
             closeAll();
-            highlightQuotes();
+            /*highlightQuotes();
             String name = draft.name;
             draft = new Reply();
             draft.name = name;
             replyManager.putReply(loadable, draft);
-            callback.loadDraftIntoViews(draft);
+            callback.loadDraftIntoViews(draft);*/
             callback.onPosted();
 
             //if (bound && !loadable.isThreadMode()) {

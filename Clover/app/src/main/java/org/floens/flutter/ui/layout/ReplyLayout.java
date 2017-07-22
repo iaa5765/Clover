@@ -308,8 +308,10 @@ public class ReplyLayout extends LoadView implements View.OnClickListener, Anima
     @Override
     public void onPosted() {
         Toast.makeText(getContext(), R.string.reply_success, Toast.LENGTH_SHORT).show();
-        callback.openReply(false);
-        callback.requestNewPostLoad();
+        callback.refreshThread();
+        onBack();
+        //callback.openReply(false);
+        //callback.requestNewPostLoad();
     }
 
     @Override
@@ -454,6 +456,8 @@ public class ReplyLayout extends LoadView implements View.OnClickListener, Anima
         void showThread(Loadable loadable);
 
         void requestNewPostLoad();
+
+        void refreshThread();
 
         ChanThread getThread();
     }
