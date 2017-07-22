@@ -26,22 +26,34 @@ public class ChanUrls {
     public static String getCatalogUrl(String board, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/api.php?req=catalog&board=" + board;
-        else
-            return scheme() + "://ponyville.us/" + board + "/catalog.json";
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/catalog.json";
+            else
+                return scheme() + "://ponyville.us/" + board + "/catalog.json";
+        }
     }
 
     public static String getPageUrl(String board, int pageNumber, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/api.php?req=threads&board=" + board + "&page=" + (pageNumber + 1);
-        else
-            return scheme() + "://ponyville.us/" + board + "/" + (pageNumber + 1) + ".json";
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/" + (pageNumber + 1) + ".json";
+            else
+                return scheme() + "://ponyville.us/" + board + "/" + (pageNumber + 1) + ".json";
+        }
     }
 
     public static String getThreadUrl(String board, int no, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/api.php?req=thread&board=" + board + "&thread=" + no;
-        else
-            return scheme() + "://ponyville.us/" + board + "/res/" + no + ".json";
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/res/" + no + ".json";
+            else
+                return scheme() + "://ponyville.us/" + board + "/res/" + no + ".json";
+        }
     }
 
     public static String getCaptchaSiteKey() {
@@ -51,21 +63,29 @@ public class ChanUrls {
     public static String getImageUrl(String board, String code, String extension, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/" + board + "/src/" + code + "." + extension;
-        else
-            return scheme() + "://ponyville.us/" + board + "/src/" + code + "." + extension;
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/src/" + code + "." + extension;
+            else
+                return scheme() + "://ponyville.us/" + board + "/src/" + code + "." + extension;
+        }
 
     }
 
     public static String getThumbnailUrl(String board, String code, String ext, String chan) {
-        if (Objects.equals(ext, "webm")) {
-            return "";//scheme() + "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
-        } else if (Objects.equals(code, "1420222744903")) {
+        if (ext.equals("webm")) {
+            return scheme() + "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
+        } else if (code.equals("1420222744903")) {
             return scheme() + "://ml.ponychan.net/" + board + "/thumb/" + code + "." + ext;
         } else
             if (chan.equals("ponychan"))
                 return scheme() + "://ponychan.net/" + board + "/thumb/" + code + "." + ext;
-            else
-                return scheme() + "://ponyville.us/" + board + "/thumb/" + code + ".png";
+            else {
+                if (board.contains("1"))
+                    return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/thumb/" + code + ".png";
+                else
+                    return scheme() + "://ponyville.us/" + board + "/thumb/" + code + ".png";
+            }
 
     }
 
@@ -110,30 +130,46 @@ public class ChanUrls {
     public static String getBoardUrlDesktop(String board, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/" + board + "/";
-        else
-            return scheme() + "://ponyville.us/" + board + "/index.html";
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/index.html";
+            else
+                return scheme() + "://ponyville.us/" + board + "/index.html";
+        }
     }
 
     public static String getThreadUrlDesktop(String board, int no, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html";
-        else
-            return scheme() + "://ponyville.us/" + board + "/res/" + no + ".html";
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/res/" + no + ".html";
+            else
+                return scheme() + "://ponyville.us/" + board + "/res/" + no + ".html";
+        }
     }
 
     public static String getThreadUrlDesktop(String board, int no, int postNo, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/" + board + "/res/" + no + ".html#" + postNo;
-        else
-            return scheme() + "://ponyville.us/" + board + "/res/" + no + ".html#" + postNo;
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/res/" + no + ".html#" + postNo;
+            else
+                return scheme() + "://ponyville.us/" + board + "/res/" + no + ".html#" + postNo;
+        }
 
     }
 
     public static String getCatalogUrlDesktop(String board, String chan) {
         if (chan.equals("ponychan"))
             return scheme() + "://ponychan.net/" + board + "/catalog.html";
-        else
-            return scheme() + "://ponyville.us/" + board + "/catalog.html";
+        else {
+            if (board.contains("1"))
+                return scheme() + "://ponyville.us/" + board.substring(0, board.length()-1) + "/catalog.html";
+            else
+                return scheme() + "://ponyville.us/" + board + "/catalog.html";
+        }
     }
 
     public static String getPassUrl() {

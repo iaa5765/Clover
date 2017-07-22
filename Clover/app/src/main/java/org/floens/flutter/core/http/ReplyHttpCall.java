@@ -19,6 +19,7 @@ package org.floens.flutter.core.http;
 
 import android.text.TextUtils;
 
+import org.floens.flutter.Chan;
 import org.floens.flutter.chan.ChanUrls;
 import org.floens.flutter.core.model.Reply;
 import org.jsoup.Jsoup;
@@ -93,7 +94,7 @@ public class ReplyHttpCall extends HttpCall {
             formBuilder.addFormDataPart("spoiler", "on");
         }
 
-        requestBuilder.url(ChanUrls.getReplyUrl(reply.board));
+        requestBuilder.url(ChanUrls.getReplyUrl(Chan.getBoardManager().getBoardByCode(reply.board).chan));
         requestBuilder.post(formBuilder.build());
         this.posted = true;
         return reply;

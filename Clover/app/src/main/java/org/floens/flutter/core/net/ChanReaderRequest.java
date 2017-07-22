@@ -356,6 +356,7 @@ public class ChanReaderRequest extends JsonReaderRequest<ChanReaderRequest.ChanR
                     break;
                 case "tim":
                     post.tim = Long.parseLong(reader.nextString());
+                    post.file = Long.toString(post.tim);
                     break;
                 case "time":
                     post.time = reader.nextLong();
@@ -382,15 +383,11 @@ public class ChanReaderRequest extends JsonReaderRequest<ChanReaderRequest.ChanR
                     post.replies = reader.nextInt();
                     break;
                 case "file":
-                    String tim = reader.nextString();
-                    if (tim.length() == 16) {
-                        post.tim = Long.parseLong(tim.substring(0, tim.length() - 4));
-                    } else if (tim.length() == 17) {
-                        post.tim = Long.parseLong(tim.substring(0, tim.length() - 4));
-                    } else if (tim.length() == 18) {
-                        post.tim = Long.parseLong(tim.substring(0, tim.length() - 5));
-                    }
-                    post.file = tim;
+                    String fName = reader.nextString();
+                    if (fName.contains("mtr"))
+                        post.file = fName.substring(0,20);
+                    else
+                        post.file = fName.substring(0,16);
                     break;
                 case "sticky":
                     post.sticky = reader.nextInt() == 1;

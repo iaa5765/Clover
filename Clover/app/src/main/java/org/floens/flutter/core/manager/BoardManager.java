@@ -175,10 +175,10 @@ public class BoardManager implements Response.Listener<List<Board>>, Response.Er
         list.add(new Board("Fanworks", "fan", true, true, "ponychan"));
         list.add(new Board("Site Issues", "site", true, true, "ponychan"));
         list.add(new Board("Twilight's Library", "arch", true, true, "ponychan"));
-        list.add(new Board("Ponyville", "pony", true, true, "ponyville"));
-        list.add(new Board("Ponyville Roleplay", "rp", true, true, "ponyville"));
+        list.add(new Board("Ponyville", "pony1", true, true, "ponyville"));
+        list.add(new Board("Ponyville Roleplay", "rp1", true, true, "ponyville"));
         list.add(new Board("Canterlot", "canterlot", true, true, "ponyville"));
-        list.add(new Board("Ponyville Municipal Archives", "arch", true, true, "ponyville"));
+        list.add(new Board("Ponyville Municipal Archives", "arch1", true, true, "ponyville"));
 
         return list;
     }
