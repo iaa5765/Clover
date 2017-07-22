@@ -157,7 +157,7 @@ public class Post {
         //fix linebreaks first
         raw = raw.replaceAll("\\r\\n", "<br>\n");
 
-        System.out.println(raw);
+        //System.out.println(raw);
 
         //fix greentext
         {
@@ -174,8 +174,7 @@ public class Post {
 
             if (matchesFound)
                 regexMatcher.appendTail(temp);
-
-            if (!matchesFound)
+            else
                 temp.append(raw);
 
             raw = temp.toString();
@@ -196,8 +195,7 @@ public class Post {
 
             if (matchesFound)
                 regexMatcher.appendTail(temp);
-
-            if (!matchesFound)
+            else
                 temp.append(raw);
 
             raw = temp.toString();
@@ -218,12 +216,36 @@ public class Post {
 
             if (matchesFound)
                 regexMatcher.appendTail(temp);
-
-            if (!matchesFound)
+            else
                 temp.append(raw);
 
             raw = temp.toString();
         }
+
+        //spoilers
+        {
+            Pattern regex = Pattern.compile("\\[\\?](.+?)\\[/\\?]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<s>" + regexMatcher.group(1).toString() + "</s>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //System.out.println("=========DEBUGGING RAW COMMENT===========");
+        //System.out.print(raw);
+        //System.out.println("=========DEBUGGING RAW COMMENT===========");
 
         return raw;
     }
@@ -236,7 +258,6 @@ public class Post {
      */
     public boolean finish() {
         rawComment = TextUtils.htmlEncode(rawComment);
-        System.out.print(rawComment);
         rawComment = parseRawComment(rawComment);
         comment = rawComment;
 
