@@ -266,9 +266,177 @@ public class Post {
             raw = temp.toString();
         }
 
-        //System.out.println("=========DEBUGGING RAW COMMENT===========");
-        //System.out.print(raw);
-        //System.out.println("=========DEBUGGING RAW COMMENT===========");
+        //bold
+        {
+            Pattern regex = Pattern.compile("\\[b](.+?)\\[/b]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<strong>" + regexMatcher.group(1).toString() + "</strong>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //italics
+        {
+            Pattern regex = Pattern.compile("\\[i](.+?)\\[/i]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<i>" + regexMatcher.group(1).toString() + "</i>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //underline
+        {
+            Pattern regex = Pattern.compile("\\[u](.+?)\\[/u]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<u>" + regexMatcher.group(1).toString() + "</u>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //strikethrough
+        {
+            Pattern regex = Pattern.compile("\\[s](.+?)\\[/s]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<span class=\"strikethrough\">" + regexMatcher.group(1).toString() + "</span>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //shy
+        {
+            Pattern regex = Pattern.compile("\\[shy](.+?)\\[/shy]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<sup>" + regexMatcher.group(1).toString() + "</sup>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //shy
+        {
+            Pattern regex = Pattern.compile("\\[shy](.+?)\\[/shy]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<sup>" + regexMatcher.group(1).toString() + "</sup>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //rcv filter
+        {
+            Pattern regex = Pattern.compile("\\[rcv](.+?)\\[/rcv]");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<strong>" + regexMatcher.group(1).toString().toUpperCase() + "</strong>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        //red headers
+        {
+            Pattern regex = Pattern.compile("==(.+?)==");
+            Matcher regexMatcher = regex.matcher(raw);
+            StringBuffer temp = new StringBuffer();
+            boolean matchesFound = false;
+
+            while (regexMatcher.find())
+            {
+                matchesFound = true;
+                regexMatcher.appendReplacement(temp, "<span class=\"heading\">" + regexMatcher.group(1).toString().toUpperCase() + "</span>");
+            }
+
+            if (matchesFound)
+                regexMatcher.appendTail(temp);
+            else
+                temp.append(raw);
+
+            raw = temp.toString();
+        }
+
+        System.out.println("=========DEBUGGING RAW COMMENT===========");
+        System.out.print(raw);
+        System.out.println("=========DEBUGGING RAW COMMENT===========");
 
         return raw;
     }
