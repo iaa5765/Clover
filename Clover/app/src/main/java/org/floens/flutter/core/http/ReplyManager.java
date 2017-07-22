@@ -34,6 +34,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Callback;
+import okio.Buffer;
 
 /**
  * To send an reply to 4chan.
@@ -85,6 +86,18 @@ public class ReplyManager {
 
     public File getPickFile() {
         return new File(context.getCacheDir(), "picked_file");
+    }
+
+    private static String bodyToString(final Request request){
+
+        try {
+            final Request copy = request.newBuilder().build();
+            final Buffer buffer = new Buffer();
+            copy.body().writeTo(buffer);
+            return buffer.readUtf8();
+        } catch (final IOException e) {
+            return "did not work";
+        }
     }
 
     public void makeHttpCall(HttpCall httpCall, HttpCallback<? extends HttpCall> callback) {

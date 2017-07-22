@@ -204,6 +204,12 @@ public class ThreadListLayout extends FrameLayout implements ReplyLayout.ReplyLa
         }
     }
 
+    public void refreshThread() {
+        System.out.println("TRYING TO FORCE THREAD REFRESH!");
+        callback.refreshThread();
+        openReply(false);
+    }
+
     public void showPosts(ChanThread thread, PostsFilter filter, boolean initial) {
         showingThread = thread;
         if (initial) {
@@ -534,10 +540,10 @@ public class ThreadListLayout extends FrameLayout implements ReplyLayout.ReplyLa
     };
 
     private void party() {
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.OCTOBER && calendar.get(Calendar.DAY_OF_MONTH) == 1) {
             recyclerView.addItemDecoration(PARTY);
-        }
+        }*/
     }
 
     private void noParty() {
@@ -550,6 +556,8 @@ public class ThreadListLayout extends FrameLayout implements ReplyLayout.ReplyLa
         void requestNewPostLoad();
 
         void onListScrolledToBottom();
+
+        void refreshThread();
     }
 
     public interface ThreadListLayoutCallback {

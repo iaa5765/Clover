@@ -134,6 +134,10 @@ public class ThreadPresenter implements ChanLoader.ChanLoaderCallback, PostAdapt
         }
     }
 
+    public void refreshThread() {
+        chanLoader.quickLoad();
+    }
+
     public void requestData() {
         threadPresenterCallback.showLoading();
         chanLoader.requestData();
