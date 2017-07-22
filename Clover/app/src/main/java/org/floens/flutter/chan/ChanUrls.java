@@ -50,7 +50,7 @@ public class ChanUrls {
 
     public static String getThumbnailUrl(String board, String code, String ext) {
         if (Objects.equals(ext, "webm")) {
-            return "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
+            return scheme() + "://ponychan.net/" + board + "/thumb/" + code + ".jpg";
         } else if (Objects.equals(code, "1420222744903")) {
             return scheme() + "://ml.ponychan.net/" + board + "/thumb/" + code + "." + ext;
         } else
