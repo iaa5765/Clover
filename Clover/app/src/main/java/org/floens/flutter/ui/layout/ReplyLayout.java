@@ -309,8 +309,12 @@ public class ReplyLayout extends LoadView implements View.OnClickListener, Anima
     public void onPosted() {
         Toast.makeText(getContext(), R.string.reply_success, Toast.LENGTH_SHORT).show();
         callback.refreshThread();
-        onBack();
-        //callback.openReply(false);
+        callback.openReply(false);
+        setFileName("");
+        message.setText("");
+        options.setText("");
+        comment.setText("");
+        spoiler.setActivated(false);
         //callback.requestNewPostLoad();
     }
 
