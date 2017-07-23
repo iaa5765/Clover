@@ -371,27 +371,6 @@ public class Post {
             raw = temp.toString();
         }
 
-        //shy
-        {
-            Pattern regex = Pattern.compile("\\[shy](.+?)\\[/shy]");
-            Matcher regexMatcher = regex.matcher(raw);
-            StringBuffer temp = new StringBuffer();
-            boolean matchesFound = false;
-
-            while (regexMatcher.find())
-            {
-                matchesFound = true;
-                regexMatcher.appendReplacement(temp, "<sup>" + regexMatcher.group(1).toString() + "</sup>");
-            }
-
-            if (matchesFound)
-                regexMatcher.appendTail(temp);
-            else
-                temp.append(raw);
-
-            raw = temp.toString();
-        }
-
         //rcv filter
         {
             Pattern regex = Pattern.compile("\\[rcv](.+?)\\[/rcv]");
