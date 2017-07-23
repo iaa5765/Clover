@@ -18,10 +18,12 @@
 package org.floens.flutter.chan;
 
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
@@ -231,6 +233,24 @@ public class ChanParser {
                 case "br": {
                     return "\n";
                 }
+                case "i": {
+                    Element span = (Element) node;
+                    SpannableString italic = new SpannableString(span.text());
+                    italic.setSpan(new StyleSpan(Typeface.ITALIC), 0, span.text().length(), 0);
+                    return italic;
+                }
+                case "b": {
+                    Element span = (Element) node;
+                    SpannableString bold = new SpannableString(span.text());
+                    bold.setSpan(new StyleSpan(Typeface.BOLD), 0, span.text().length(), 0);
+                    return bold;
+                }
+                case "u": {
+                    Element span = (Element) node;
+                    SpannableString uline = new SpannableString(span.text());
+                    uline.setSpan(new UnderlineSpan(), 0, span.text().length(), 0);
+                    return uline;
+                }
                 case "span": {
                     Element span = (Element) node;
 
@@ -240,6 +260,9 @@ public class ChanParser {
                     if (classes.contains("deadlink")) {
                         quote = new SpannableString(span.text());
                         quote.setSpan(new ForegroundColorSpanHashed(theme.quoteColor), 0, quote.length(), 0);
+                        quote.setSpan(new StrikethroughSpan(), 0, quote.length(), 0);
+                    } else if (classes.contains("strikethrough")) {
+                        quote = new SpannableString(span.text());
                         quote.setSpan(new StrikethroughSpan(), 0, quote.length(), 0);
                     } else if (classes.contains("fortune")) {
                         // html looks like <span class="fortune" style="color:#0893e1"><br><br><b>Your fortune:</b>

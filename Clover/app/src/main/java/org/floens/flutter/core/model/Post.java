@@ -247,7 +247,7 @@ public class Post {
 
         //spoilers
         {
-            Pattern regex = Pattern.compile("\\[\\?](.+?)\\[/\\?]");
+            Pattern regex = Pattern.compile("(\\[\\?](.+?)\\[/\\?]|\\[spoiler](.+?)\\[/spoiler])");
             Matcher regexMatcher = regex.matcher(raw);
             StringBuffer temp = new StringBuffer();
             boolean matchesFound = false;
@@ -276,7 +276,7 @@ public class Post {
             while (regexMatcher.find())
             {
                 matchesFound = true;
-                regexMatcher.appendReplacement(temp, "<strong>" + regexMatcher.group(1).toString() + "</strong>");
+                regexMatcher.appendReplacement(temp, "<b>" + regexMatcher.group(1).toString() + "</b>");
             }
 
             if (matchesFound)
@@ -423,7 +423,7 @@ public class Post {
             while (regexMatcher.find())
             {
                 matchesFound = true;
-                regexMatcher.appendReplacement(temp, "<span class=\"heading\">" + regexMatcher.group(1).toString().toUpperCase() + "</span>");
+                regexMatcher.appendReplacement(temp, "<strong>" + regexMatcher.group(1).toString().toUpperCase() + "</strong>");
             }
 
             if (matchesFound)
