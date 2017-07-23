@@ -247,7 +247,7 @@ public class Post {
 
         //spoilers
         {
-            Pattern regex = Pattern.compile("\\[\\?](.+?)\\[/\\?]");
+            Pattern regex = Pattern.compile("(\\[\\?](.+?)\\[/\\?]|\\[spoiler](.+?)\\[/spoiler])");
             Matcher regexMatcher = regex.matcher(raw);
             StringBuffer temp = new StringBuffer();
             boolean matchesFound = false;
