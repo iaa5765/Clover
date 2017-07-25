@@ -17,25 +17,40 @@
  */
 package org.floens.flutter.core.http;
 
+import android.os.NetworkOnMainThreadException;
 import android.text.TextUtils;
 
+import com.android.volley.AuthFailureError;
+
 import org.floens.flutter.Chan;
+import org.floens.flutter.chan.ChanLoader;
 import org.floens.flutter.chan.ChanUrls;
+import org.floens.flutter.core.model.Loadable;
 import org.floens.flutter.core.model.Reply;
+import org.floens.flutter.core.net.ChanReaderRequest;
+import org.floens.flutter.core.settings.ChanSettings;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.Call;
 
 public class ReplyHttpCall extends HttpCall {
+    private OkHttpClient httpClient;
+    private static String hash ="";
     private static final String TAG = "ReplyHttpCall";
     private static final Random RANDOM = new Random();
     private static final Pattern THREAD_NO_PATTERN = Pattern.compile("<!-- thread:([0-9]+),no:([0-9]+) -->");
@@ -54,8 +69,19 @@ public class ReplyHttpCall extends HttpCall {
         this.reply = reply;
     }
 
+    public static void setHash(String hash) {
+        ReplyHttpCall.hash = hash;
+    }
+
     @Override
     public Reply setup(Request.Builder requestBuilder) {
+        String chan = Chan.getBoardManager().getBoardByCode(reply.board).chan;
+        String board;
+        if (reply.board.contains("1"))
+            board = reply.board.substring(0, reply.board.length()-1);
+        else
+            board = reply.board;
+
         boolean thread = reply.resto >= 0;
 
         password = Long.toHexString(RANDOM.nextLong());
@@ -65,6 +91,48 @@ public class ReplyHttpCall extends HttpCall {
 
         formBuilder.addFormDataPart("name", reply.name);
         formBuilder.addFormDataPart("email", reply.options);
+
+        if (chan.equals("ponyville") && hash.equals("")) {
+            requestBuilder.url(ChanUrls.getThreadUrlDesktop(board, reply.resto, chan));
+            //requestBuilder.post(formBuilder.build());
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                    .readTimeout(10000, TimeUnit.MILLISECONDS)
+                    .writeTimeout(10000, TimeUnit.MILLISECONDS)
+                    // Disable SPDY, causes reproducible timeouts, only one download at the same time and other fun stuff
+                    .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+                    .build();
+
+            requestBuilder.tag("HttpRequest");
+
+            System.out.println(hash);
+
+            Call call = client.newCall(requestBuilder.build());
+            call.enqueue(new ReplyHttpCall(reply));
+
+
+            //requestBuilder.post(formBuilder.build());
+            System.out.println(call.request().toString());
+            String responseBody = "";
+
+            Response response = null;
+
+            try {
+                try {
+                    try {
+                        response = call.execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    responseBody = response.body().toString();
+                } catch (NetworkOnMainThreadException e) {
+                }
+            } catch (IllegalStateException e) {
+            }
+
+            System.out.println("response: " + responseBody);
+
+        }
 
         if (!thread && !TextUtils.isEmpty(reply.subject)) {
             formBuilder.addFormDataPart("subject", reply.subject);
@@ -81,10 +149,17 @@ public class ReplyHttpCall extends HttpCall {
         if (thread) {
             formBuilder.addFormDataPart("thread", String.valueOf(reply.resto));
         }
-        formBuilder.addFormDataPart("board", reply.board);
-        formBuilder.addFormDataPart("making_a_post", "1");
-        formBuilder.addFormDataPart("post", "New Reply");
-        formBuilder.addFormDataPart("wantjson", "1");
+        formBuilder.addFormDataPart("board", board);
+
+        if (chan.equals("ponychan")) {
+            formBuilder.addFormDataPart("making_a_post", "1");
+            formBuilder.addFormDataPart("post", "New Reply");
+            formBuilder.addFormDataPart("wantjson", "1");
+        } else {
+            formBuilder.addFormDataPart("post", "Post");
+            formBuilder.addFormDataPart("hash", this.hash);
+            formBuilder.addFormDataPart("json_response", "1");
+        }
 
          if (thread) {
              formBuilder.addFormDataPart("resto", String.valueOf(reply.resto));
@@ -94,8 +169,10 @@ public class ReplyHttpCall extends HttpCall {
             formBuilder.addFormDataPart("spoiler", "on");
         }
 
-        requestBuilder.url(ChanUrls.getReplyUrl(Chan.getBoardManager().getBoardByCode(reply.board).chan));
+        requestBuilder.url(ChanUrls.getReplyUrl(chan));
+        System.out.println(hash);
         requestBuilder.post(formBuilder.build());
+
         this.posted = true;
         return reply;
 

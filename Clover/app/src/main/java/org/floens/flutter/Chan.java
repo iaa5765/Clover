@@ -197,7 +197,7 @@ public class Chan extends Application {
         }
     }
 
-    private String fetchUserID() {
+    public String fetchUserID() {
         String hexDigits = "0123456789abcdef";
         String temp = "";
 

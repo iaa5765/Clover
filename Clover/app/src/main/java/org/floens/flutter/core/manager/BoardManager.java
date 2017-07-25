@@ -168,17 +168,31 @@ public class BoardManager implements Response.Listener<List<Board>>, Response.Er
 
     private List<Board> getDefaultBoards() {
         List<Board> list = new ArrayList<>();
-        list.add(new Board("Oatmeal", "oat", true, true, "ponychan"));
-        list.add(new Board("Show Discussion", "pony", true, true, "ponychan"));
-        list.add(new Board("Chat", "chat", true, true, "ponychan"));
-        list.add(new Board("Roleplay", "rp", true, true, "ponychan"));
-        list.add(new Board("Fanworks", "fan", true, true, "ponychan"));
-        list.add(new Board("Site Issues", "site", true, true, "ponychan"));
-        list.add(new Board("Twilight's Library", "arch", true, true, "ponychan"));
-        list.add(new Board("Ponyville", "pony1", true, true, "ponyville"));
-        list.add(new Board("Ponyville Roleplay", "rp1", true, true, "ponyville"));
-        list.add(new Board("Canterlot", "canterlot", true, true, "ponyville"));
-        list.add(new Board("Ponyville Municipal Archives", "arch1", true, true, "ponyville"));
+        list.add(new Board("(PC) Oatmeal", "oat", true, true, "ponychan"));
+        list.add(new Board("(PC) Show Discussion", "pony", true, true, "ponychan"));
+        list.add(new Board("(PC) Chat", "chat", true, true, "ponychan"));
+        list.add(new Board("(PC) Roleplay", "rp", true, true, "ponychan"));
+        list.add(new Board("(PC) Fanworks", "fan", true, true, "ponychan"));
+        list.add(new Board("(PC) Site Issues", "site", true, true, "ponychan"));
+        list.add(new Board("(PC) Twilight's Library", "arch", true, true, "ponychan"));
+        list.add(new Board("(PC) The Dungeon", "moon", false, true, "ponychan"));
+        list.add(new Board("(PC) Art", "art", false, true, "ponychan"));
+        list.add(new Board("(PC) Projects", "collab", false, true, "ponychan"));
+        list.add(new Board("(PC) Pictures", "pic", false, true, "ponychan"));
+        list.add(new Board("(PC) Fanfiction", "fic", false, true, "ponychan"));
+        list.add(new Board("(PC) Games", "g", false, true, "ponychan"));
+        list.add(new Board("(PC) World", "int", false, true, "ponychan"));
+        list.add(new Board("(PC) Merchandise", "merch", false, true, "ponychan"));
+        list.add(new Board("(PC) Suggestion Box", "meta", false, true, "ponychan"));
+        list.add(new Board("(PC) Roleplay Lounge", "ooc", false, true, "ponychan"));
+        list.add(new Board("(PC) Deletion Board", "trash", false, true, "ponychan"));
+        list.add(new Board("(PC) Music", "vinyl", false, true, "ponychan"));
+        list.add(new Board("(PV) Pony", "pony1", true, true, "ponyville"));
+        list.add(new Board("(PV) Cartoon", "cartoon", false, true, "ponyville"));
+        list.add(new Board("(PV) Roleplay", "rp1", true, true, "ponyville"));
+        list.add(new Board("(PV) Canterlot", "canterlot", true, true, "ponyville"));
+        list.add(new Board("(PV) Ponyville Municipal Archives", "arch1", true, true, "ponyville"));
+        list.add(new Board("(PV) Testing", "test1", false, true, "ponyville"));
 
         return list;
     }

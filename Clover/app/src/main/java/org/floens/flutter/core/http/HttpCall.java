@@ -28,6 +28,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public abstract class HttpCall implements Callback {
     private static final String TAG = "HttpCall";
@@ -55,13 +56,20 @@ public abstract class HttpCall implements Callback {
     @Override
     public void onResponse(Call call, Response response) {
         try {
-            System.out.println(response.body().string() + " code: " + Integer.toString(response.code()) + " response " + response.toString() + " message " + response.message());
+            String responseBody = response.body().string();
+            System.out.println(responseBody.length() + "resp: " + responseBody + " code: " /*+ Integer.toString(response.code())/ + " response " + response.toString() + " message " + response.message()*/);
+            int hash = responseBody.indexOf("\"hash\" value=\"");
+            if (hash != -1)
+                ReplyHttpCall.setHash(responseBody.substring(hash+14,hash+54));
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            if (response.body() != null) {
-                String responseString = response.body().string();
+            ResponseBody body = response.body();
+            if (body != null) {
+                String responseString = "";
+                try { responseString = body.string(); }
+                catch (IllegalStateException e) {}
                 process(response, responseString);
                 successful = true;
             } else {
@@ -76,7 +84,9 @@ public abstract class HttpCall implements Callback {
         AndroidUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                postUI(successful);
+                try {
+                    postUI(successful);
+                } catch (NullPointerException e) {}
             }
         });
     }

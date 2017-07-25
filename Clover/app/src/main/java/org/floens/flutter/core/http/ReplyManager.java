@@ -114,10 +114,9 @@ public class ReplyManager {
             requestBuilder.header("Cookie", "userid=" + userID);
         } else {
             if (reply.board.contains("1"))
-                requestBuilder.header("Referer", "https://ponyville.us/" + reply.board.substring(0, reply.board.length()-1) + "/res/" + reply.resto + "+50.html");
+                requestBuilder.header("Referer", "http://ponyville.us/" + reply.board.substring(0, reply.board.length()-1) + "/res/" + reply.resto + "+50.html");
             else {
-                requestBuilder.header("Referer", "https://ponyville.us/" + reply.board + "/res/" + reply.resto + ".html");
-                requestBuilder.header("__cfduid", "d87f7ecf593c5156cea33f9585a6e7e111488111754");
+                requestBuilder.header("Referer", "http://ponyville.us/" + reply.board + "/res/" + reply.resto + ".html");
             }
         }
 

@@ -132,8 +132,8 @@ public class UpdateManager {
             }
 
             Logger.i(TAG, "Update available (" + message.code + ") with url \"" + message.apkUrl + "\".");
-            callback.showUpdateAvailableDialog(message);
-            return true;
+            //callback.showUpdateAvailableDialog(message);
+            //return true;
         }
 
         return false;
